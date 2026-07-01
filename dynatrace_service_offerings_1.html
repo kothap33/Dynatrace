@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynatrace Service Offerings</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      color: #172B4D;
+      background: #F4F5F7;
+      line-height: 1.6;
+    }
+
+    /* ── Top bar ──────────────────────────────────────── */
+    .cf-topbar {
+      background: #0052CC;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+    }
+    .cf-topbar a { color: #fff; text-decoration: none; }
+    .cf-topbar a:hover { text-decoration: underline; }
+    .cf-topbar span.sep { opacity: 0.6; }
+
+    /* ── Layout ───────────────────────────────────────── */
+    .cf-body { display: flex; min-height: calc(100vh - 42px); }
+
+    /* ── Sidebar ──────────────────────────────────────── */
+    .cf-sidebar {
+      width: 220px;
+      min-width: 220px;
+      background: #fff;
+      border-right: 1px solid #DFE1E6;
+      padding: 20px 12px;
+      flex-shrink: 0;
+    }
+    .cf-sidebar-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6B778C;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+      padding: 0 8px;
+    }
+    .cf-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 3px;
+      font-size: 13px;
+      color: #42526E;
+      cursor: pointer;
+      margin-bottom: 2px;
+      text-decoration: none;
+    }
+    .cf-nav-item:hover { background: #F4F5F7; color: #0052CC; }
+    .cf-nav-item.active { background: #DEEBFF; color: #0052CC; font-weight: 500; }
+    .cf-nav-icon { font-size: 15px; flex-shrink: 0; }
+
+    /* ── Content area ─────────────────────────────────── */
+    .cf-content {
+      flex: 1;
+      padding: 36px 48px;
+      max-width: 900px;
+      background: #fff;
+    }
+
+    /* ── Page header ──────────────────────────────────── */
+    .cf-page-header {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #DFE1E6;
+    }
+    .cf-icon-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .cf-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      background: #DEEBFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .cf-h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #172B4D;
+      line-height: 1.25;
+    }
+    .cf-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 12px;
+      color: #6B778C;
+      flex-wrap: wrap;
+    }
+    .cf-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .cf-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #0052CC;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    /* ── Info banner ──────────────────────────────────── */
+    .info-banner {
+      background: #DEEBFF;
+      border: 1px solid #B3D4FF;
+      border-left: 4px solid #0052CC;
+      border-radius: 3px;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      color: #172B4D;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .info-banner .icon { font-size: 18px; color: #0052CC; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Sections ─────────────────────────────────────── */
+    .cf-section { margin-bottom: 32px; }
+
+    .cf-h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #172B4D;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #DFE1E6;
+    }
+    .cf-h2 .icon { font-size: 17px; color: #0052CC; }
+
+    /* ── Tables ───────────────────────────────────────── */
+    .cf-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      border: 1px solid #DFE1E6;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .cf-table thead tr {
+      background: #F4F5F7;
+    }
+    .cf-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      color: #42526E;
+      border-bottom: 1px solid #DFE1E6;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .cf-table td {
+      padding: 10px 14px;
+      color: #172B4D;
+      border-bottom: 1px solid #DFE1E6;
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .cf-table tr:last-child td { border-bottom: none; }
+    .cf-table tr:hover td { background: #F4F5F7; }
+    .cf-table td.cat { font-weight: 500; white-space: nowrap; }
+
+    /* ── Badges ───────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .badge-blue   { background: #DEEBFF; color: #0747A6; border: 1px solid #B3D4FF; }
+    .badge-green  { background: #E3FCEF; color: #006644; border: 1px solid #ABF5D1; }
+    .badge-amber  { background: #FFFAE6; color: #7A5200; border: 1px solid #FFE380; }
+    .badge-purple { background: #EAE6FF; color: #403294; border: 1px solid #C0B6F2; }
+    .badge-gray   { background: #F4F5F7; color: #5E6C84; border: 1px solid #DFE1E6; }
+
+    /* ── Legend ───────────────────────────────────────── */
+    .legend-box {
+      background: #F4F5F7;
+      border: 1px solid #DFE1E6;
+      border-radius: 3px;
+      padding: 14px 18px;
+      margin-top: 8px;
+    }
+    .legend-title {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #6B778C;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 24px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      color: #42526E;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ───────────────────────────────────────── */
+    .cf-footer {
+      margin-top: 36px;
+      padding-top: 16px;
+      border-top: 1px solid #DFE1E6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #97A0AF;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ── Print ────────────────────────────────────────── */
+    @media print {
+      .cf-topbar { background: #0052CC !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .cf-sidebar { display: none; }
+      .cf-content { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top navigation bar -->
+<div class="cf-topbar">
+  <span>📋</span>
+  <a href="#">Spaces</a>
+  <span class="sep">›</span>
+  <a href="#">Platform Engineering</a>
+  <span class="sep">›</span>
+  <a href="#">Observability</a>
+  <span class="sep">›</span>
+  <strong style="color:#fff">Dynatrace Service Offerings</strong>
+</div>
+
+<div class="cf-body">
+
+  <!-- Sidebar -->
+  <nav class="cf-sidebar" aria-label="Page sections">
+    <div class="cf-sidebar-title">On this page</div>
+    <a class="cf-nav-item active" href="#infra"><span class="cf-nav-icon">🖥️</span> Infrastructure</a>
+    <a class="cf-nav-item" href="#rum"><span class="cf-nav-icon">🌐</span> Front-end &amp; RUM</a>
+    <a class="cf-nav-item" href="#synthetics"><span class="cf-nav-icon">🤖</span> Synthetics</a>
+    <a class="cf-nav-item" href="#logs"><span class="cf-nav-icon">📄</span> Log management</a>
+    <a class="cf-nav-item" href="#cloud"><span class="cf-nav-icon">☁️</span> Cloud integrations</a>
+    <a class="cf-nav-item" href="#k8s"><span class="cf-nav-icon">🐳</span> Kubernetes</a>
+    <a class="cf-nav-item" href="#extensions"><span class="cf-nav-icon">🔌</span> Extensions</a>
+    <a class="cf-nav-item" href="#db"><span class="cf-nav-icon">🗄️</span> DB monitoring</a>
+  </nav>
+
+  <!-- Main content -->
+  <main class="cf-content">
+
+    <div class="cf-page-header">
+      <div class="cf-icon-title">
+        <div class="cf-icon">📊</div>
+        <h1 class="cf-h1">Dynatrace service offerings</h1>
+      </div>
+      <div class="cf-meta">
+        <div class="cf-meta-item">
+          <div class="cf-avatar">KK</div>
+          <span>Kumar K</span>
+        </div>
+        <div class="cf-meta-item">📅 <span>1 Jul 2026</span></div>
+        <div class="cf-meta-item">🏷️ <span>Platform Engineering · Observability</span></div>
+      </div>
+    </div>
+
+    <div class="info-banner">
+      <span class="icon">ℹ️</span>
+      <span>This page documents all Dynatrace monitoring types, their coverage scope, and the ingestion method used. Reference this during scoping, onboarding, or licence planning conversations.</span>
+    </div>
+
+    <!-- Infrastructure Monitoring -->
+    <div class="cf-section" id="infra">
+      <h2 class="cf-h2"><span class="icon">🖥️</span> Infrastructure monitoring</h2>
+      <table class="cf-table" aria-label="Infrastructure monitoring">
+        <thead>
+          <tr>
+            <th style="width:185px">Monitoring type</th>
+            <th>Coverage</th>
+            <th style="width:130px">Ingestion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cat">Discovery</td>
+            <td>CPU, Memory, Disk, Network</td>
+            <td><span class="badge badge-blue">⚡ OneAgent</span></td>
+          </tr>
+          <tr>
+            <td class="cat">Infrastructure</td>
+            <td>Discovery + Process Monitoring</td>
+            <td><span class="badge badge-blue">⚡ OneAgent</span></td>
+          </tr>
+          <tr>
+            <td class="cat">Full-stack</td>
+            <td>Infrastructure + Application Services + Optional (Front-end &amp; RUM)</td>
+            <td><span class="badge badge-blue">⚡ OneAgent</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Front-end & RUM -->
+    <div class="cf-section" id="rum">
+      <h2 class="cf-h2"><span class="icon">🌐</span> Front-end &amp; RUM</h2>
+      <table class="cf-table" aria-label="Front-end and RUM monitoring">
+        <thead>
+          <tr>
+            <th style="width:185px">Monitoring type</th>
+            <th>Coverage</th>
+            <th style="width:130px">Ingestion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cat">Front-end &amp; RUM</td>
+            <td>Application page performance, user actions, latency, Real user analytics etc.</td>
+            <td><span class="badge badge-green">📡 Agentless</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Synthetics -->
+    <div class="cf-section" id="synthetics">
+      <h2 class="cf-h2"><span class="icon">🤖</span> Synthetics</h2>
+      <table class="cf-table" aria-label="Synthetics monitoring">
+        <thead>
+          <tr>
+            <th style="width:185px">Monitoring type</th>
+            <th>Coverage</th>
+            <th style="width:130px">Ingestion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cat">Synthetics — HTTPS</td>
+            <td>URL availability monitoring</td>
+            <td><span class="badge badge-gray">—</span></td>
+          </tr>
+          <tr>
+            <td class="cat">Synthetics — Browser</td>
+            <td>URL + Home page availability monitoring</td>
+            <td><span class="badge badge-gray">—</span></td>
+          </tr>
+          <tr>
+            <td class="cat">Synthetics — Clickpath</td>
+            <td>URL + Home page availability monitoring + Sequence of clickpath (e.g. login to logout)</td>
+            <td><span class="badge badge-gray">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Logs -->
+    <div class="cf-section" id="logs">
+      <h2 class="cf-h2"><span class="icon">📄</span> Log management</h2>
+      <table class="cf-table" aria-label="Log management">
+        <thead>
+          <tr>
+            <th style="width:185px">Monitoring type</th>
+            <th>Coverage</th>
+            <th style="width:130px">Ingestion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cat">Logs — Ingest</td>
+            <td>Host, AWS, any source</td>
+            <td><span class="badge badge-gray">—</span></td>
+          </tr>
+          <tr>
+            <td class="cat">Logs — Retention</td>
+            <td>Grail supports up to 10 years</td>
+            <td><span class="badge badge-gray">—</span></td>
+          </tr>
+          <tr>
+            <td class="cat">Logs — Query</td>
+            <td><em style="color:#6B778C">Scope TBD</em></td>
+            <td><span class="badge badge-gray">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cloud Integrations -->
+    <div class="cf-section" id="cloud">
+      <h2 class="cf-h2"><span class="icon">☁️</span> Cloud &amp; stack integrations</h2>
+      <table class="cf-table" aria-label="Cloud and stack integrations">
+        <thead>
+          <tr>
+            <th style="width:185px">Monitoring type</th>
+            <th>Coverage</th>
+            <th style="width:130px">Ingestion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cat">AWS stack</td>
+            <td>All AWS services covered</td>
+            <td><span class="badge badge-amber">🔗 Integration</span></td>
+          </tr>
+          <tr>
+            <td class="cat">Azure stack</td>
+            <td>All Azure services covered</td>
+            <td><span class="badge badge-amber">🔗 Integration</span></td>
+          </tr>
+          <tr>
+            <td class="cat">VMware stack</td>
+            <td>All VMware services covered</td>
+            <td><span class="badge badge-amber">🔗 Integration</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Kubernetes -->
+    <div class="cf-section" id="k8s">
+      <h2 class="cf-h2"><span class="icon">🐳</span> Kubernetes</h2>
+      <table class="cf-table" aria-label="Kubernetes monitoring">
+        <thead>
+          <tr>
+            <th style="width:185px">Monitoring type</th>
+            <th>Coverage</th>
+            <th style="width:130px">Ingestion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cat">K8S full-stack</td>
+            <td>All K8S — Cluster, Nodes, Workloads, Namespaces, Pods etc.</td>
+            <td><span class="badge badge-purple">🚀 Deployment</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Extensions -->
+    <div class="cf-section" id="extensions">
+      <h2 class="cf-h2"><span class="icon">🔌</span> Extensions</h2>
+      <table class="cf-table" aria-label="Extensions">
+        <thead>
+          <tr>
+            <th style="width:185px">Monitoring type</th>
+            <th>Coverage</th>
+            <th style="width:130px">Ingestion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cat">Extensions</td>
+            <td>Hundreds of extensions available with respect to technology</td>
+            <td><span class="badge badge-gray">🏪 HUB / Custom</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DB Monitoring -->
+    <div class="cf-section" id="db">
+      <h2 class="cf-h2"><span class="icon">🗄️</span> Database monitoring</h2>
+      <table class="cf-table" aria-label="Database monitoring">
+        <thead>
+          <tr>
+            <th style="width:185px">Monitoring type</th>
+            <th>Coverage</th>
+            <th style="width:130px">Ingestion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cat">DB monitoring</td>
+            <td>All DBs support monitoring</td>
+            <td><span class="badge badge-green">🔌 Agent / Remote</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend-box">
+      <div class="legend-title">Ingestion method key</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#0747A6"></div> OneAgent — agent installed on host</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#006644"></div> Agentless — no installation required</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#7A5200"></div> Integration — cloud-native API integration</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#403294"></div> Deployment — Kubernetes operator deployment</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#5E6C84"></div> HUB / Custom — extensions marketplace</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#006644"></div> Agent / Remote — agent or remote connection</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="cf-footer">
+      <span>🔒 Internal — Platform Engineering</span>
+      <span>Last updated: 1 Jul 2026</span>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
